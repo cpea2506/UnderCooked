@@ -12,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 moveDir;
 
+    private bool isWalking;
+
+    public bool IsWalking => isWalking;
+
     void Start()
     {
 
@@ -24,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        moveDir = new Vector3(0,0,0);
+        moveDir = new Vector3(0, 0, 0);
 
         if (Input.GetKey(KeyCode.D))
         {
@@ -47,8 +51,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         moveDir = moveDir.normalized;
+        isWalking = moveDir != Vector3.zero;
 
         transform.position += moveDir * movementSpeed * Time.deltaTime;
-        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime*rotateSpeed);
+        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
     }
 }
