@@ -16,10 +16,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsWalking => isWalking;
 
-    void Start()
-    {
-
-    }
+    [SerializeField]
+    private GameInput gameInput;
 
     void Update()
     {
@@ -28,31 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        moveDir = new Vector3(0, 0, 0);
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveDir.x = 1;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveDir.x = -1;
-        }
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            moveDir.z = 1;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            moveDir.z = -1;
-        }
-
-        moveDir = moveDir.normalized;
+        moveDir = gameInput.GetMovementVectorNormalized();
         isWalking = moveDir != Vector3.zero;
-
         transform.position += moveDir * movementSpeed * Time.deltaTime;
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
     }
