@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameInput : MonoBehaviour
 {
-    public Vector2 GetMovementVectorNormalized()
+    public Vector3 GetMovementVectorNormalized()
     {
         Vector3 inputVector = new Vector3(0,0,0);
         
@@ -21,13 +21,11 @@ public class GameInput : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             inputVector.z = 1;
-            Debug.Log("w");
         }
 
         if (Input.GetKey(KeyCode.S))
         {
             inputVector.z = -1;
-            Debug.Log("s");
         }
 
         return inputVector = inputVector.normalized;
