@@ -22,10 +22,14 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private LayerMask countersLayerMask;
+
+    private void Start()
+    {
+        gameInput.OnInteract += HandleInteraction;
+    }
     private void Update()
     {
         Movement();
-        HandleInteraction();
     }
 
     private void Movement()
@@ -35,19 +39,25 @@ public class PlayerMovement : MonoBehaviour
         isWalking = moveDir != Vector3.zero;
         transform.position += moveDir * movementSpeed * Time.deltaTime;
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
-    }
-
-    private void HandleInteraction()
-    {
-        float interactDistance = 2f;
+        
         if (moveDir != Vector3.zero)
         {
             lastInteractDir = moveDir;
         }
+    }
+
+    private void OnDestroy()
+    {
+        gameInput.OnInteract -= HandleInteraction;
+    }
+
+    private void HandleInteraction()
+    {
+        float interactDistance = 5f;
 
         if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, countersLayerMask))
         {
-            if(raycastHit.transform.TryGetComponent(out ClearCounter clearCounter ))
+            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
                 clearCounter.Interact();
             }
