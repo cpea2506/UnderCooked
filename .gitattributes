@@ -1,1 +1,1 @@
-D:/urpj/UnderCooked/UnderCooked/** filter=lfs diff=lfs merge=lfs -text
+./UnderCooked/** filter=lfs diff=lfs merge=lfs -text
